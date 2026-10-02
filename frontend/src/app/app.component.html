@@ -1,0 +1,120 @@
+<main class="page-shell">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Code Review início">
+      <span class="brand-mark">&lt;/&gt;</span>
+      <span>code<span class="brand-light">review</span></span>
+    </a>
+    <span class="topbar-note"><span class="status-dot"></span> Análise de código</span>
+  </header>
+
+  <section class="intro">
+    <p class="eyebrow">REVISÃO INTELIGENTE DE CÓDIGO</p>
+    <h1>Seu próximo review começa aqui<span>.</span></h1>
+    <p class="intro-copy">Encontre pontos de atenção e deixe seu código melhor, linha por linha.</p>
+  </section>
+
+  <section class="workspace" aria-label="Revisão de código">
+    <div class="editor-panel">
+      <div class="panel-heading">
+        <div class="file-tab"><span class="file-icon">●</span> trecho de código</div>
+        <label class="language-select">
+          <span class="sr-only">Linguagem de programação</span>
+          <select [(ngModel)]="language" aria-label="Linguagem de programação">
+            <option value="javascript">JavaScript</option>
+            <option value="typescript">TypeScript</option>
+            <option value="python">Python</option>
+            <option value="csharp">C#</option>
+            <option value="java">Java</option>
+            <option value="sql">SQL</option>
+            <option value="php">PHP</option>
+            <option value="go">Go</option>
+          </select>
+        </label>
+      </div>
+      <div class="code-wrap">
+        <pre class="line-numbers" aria-hidden="true">{{ lineNumbers }}</pre>
+        <label class="sr-only" for="code-input">Código para revisar</label>
+        <textarea id="code-input" [(ngModel)]="code" spellcheck="false"
+          placeholder="Cole o código que você quer revisar..." aria-label="Código para revisar"></textarea>
+      </div>
+      <div class="editor-footer">
+        <span>{{ code.length }} / 20.000 caracteres</span>
+        <span>Seu código não é executado</span>
+      </div>
+    </div>
+
+    <aside class="review-controls">
+      <div class="control-copy">
+        <span class="control-icon">✳</span>
+        <div>
+          <strong>Pronto para revisar?</strong>
+          <p>A análise local funciona sem chave de API.</p>
+        </div>
+      </div>
+      <label class="ai-toggle">
+        <input type="checkbox" [(ngModel)]="useAi">
+        <span>Usar análise por IA</span>
+        <span class="optional-tag">opcional</span>
+      </label>
+      @if (useAi) {
+        <label class="provider-select">
+          <span>Provedor de IA</span>
+          <select [(ngModel)]="provider" aria-label="Provedor de IA">
+            <option value="openrouter">OpenRouter</option>
+            <option value="gemini">Google Gemini</option>
+          </select>
+        </label>
+      }
+      <button class="review-button" type="button" (click)="analyze()" [disabled]="loading || code.length > 20000">
+        @if (loading) {
+          <span class="spinner" aria-hidden="true"></span> Analisando...
+        } @else {
+          <span aria-hidden="true">✦</span> Analisar código
+        }
+      </button>
+      <p class="privacy-note">A análise local é executada na sua máquina.</p>
+    </aside>
+  </section>
+
+  @if (error) {
+    <div class="alert error-alert" role="alert">{{ error }}</div>
+  }
+
+  @if (result) {
+    <section class="results" aria-live="polite">
+      <div class="results-heading">
+        <div>
+          <p class="eyebrow">RESULTADO DA ANÁLISE</p>
+          <h2>{{ result.summary }}</h2>
+        </div>
+        <span class="provider-badge">{{ providerLabel(result.provider) }}</span>
+      </div>
+      @if (findings.length === 0) {
+        <div class="empty-result"><span>✓</span> Nenhum alerta encontrado. Bom trabalho!</div>
+      } @else {
+        <div class="finding-list">
+          @for (finding of findings; track $index) {
+            <article class="finding-card" [class]="'finding-card severity-' + finding.severity">
+              <div class="finding-topline">
+                <span class="severity-pill">{{ severityLabel(finding.severity) }}</span>
+                <span class="line-label">Linha {{ finding.line }}</span>
+              </div>
+              <h3>{{ finding.title }}</h3>
+              <pre class="finding-evidence"><code>{{ finding.evidence }}</code></pre>
+              <p>{{ finding.description }}</p>
+              <div class="suggestion"><strong>Sugestão</strong><span>{{ finding.suggestion }}</span></div>
+            </article>
+          }
+        </div>
+      }
+    </section>
+  } @else if (!error) {
+    <section class="empty-state">
+      <span class="empty-state-icon">⌘</span>
+      <h2>Os resultados aparecem aqui</h2>
+      <p>Execute a análise para receber sugestões de melhoria.</p>
+    </section>
+  }
+
+  <footer>Feito para escrever código melhor, com mais confiança.</footer>
+</main>

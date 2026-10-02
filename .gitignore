@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Node / Angular
+node_modules/
+frontend/dist/
+frontend/.angular/
+
+# .NET
+**/bin/
+**/obj/
+
+# Local configuration
+.env
+.env.*
+**/.env
+**/.env.*
+!.env.example
+secrets.env
+**/secrets.env
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local build artifacts and logs
+*.log
+.DS_Store
+.vscode/
