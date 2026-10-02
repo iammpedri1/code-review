@@ -74,15 +74,16 @@ Como alternativa a `.env`, guarde uma cópia do exemplo em uma pasta privada e p
 
 ```bash
 mkdir -p "$HOME/.config/code-reviewer"
-cp .env.example "$HOME/.config/code-reviewer/secrets.env"
-chmod 600 "$HOME/.config/code-reviewer/secrets.env"
+cp .env.example "$HOME/.config/code-reviewer/openrouter.env"
+chmod 600 "$HOME/.config/code-reviewer/openrouter.env"
+# Edite openrouter.env: informe sua chave e, se quiser, escolha o modelo.
 ```
 
 Inicie o Compose passando o arquivo privado:
 
 ```bash
-docker compose --env-file "$HOME/.config/code-reviewer/secrets.env" -p code-reviewer build
-docker compose --env-file "$HOME/.config/code-reviewer/secrets.env" -p code-reviewer up -d
+docker compose --env-file "$HOME/.config/code-reviewer/openrouter.env" -p code-reviewer build
+docker compose --env-file "$HOME/.config/code-reviewer/openrouter.env" -p code-reviewer up -d
 ```
 
 ## Usar o aplicativo
