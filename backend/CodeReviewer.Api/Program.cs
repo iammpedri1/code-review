@@ -14,7 +14,7 @@ builder.Services.AddHttpClient<PythonReviewClient>(client =>
 {
     var baseUrl = builder.Configuration["PythonService:BaseUrl"] ?? "http://127.0.0.1:8001";
     client.BaseAddress = new Uri(baseUrl.TrimEnd('/') + "/");
-    client.Timeout = TimeSpan.FromSeconds(35);
+    client.Timeout = TimeSpan.FromSeconds(50);
 });
 
 var app = builder.Build();
@@ -48,14 +48,6 @@ app.MapPost("/api/reviews", async (
         return Results.ValidationProblem(new Dictionary<string, string[]>
         {
             ["language"] = ["Informe uma linguagem com até 40 caracteres."]
-        });
-    }
-
-    if (request.UseAi && request.Provider is not ("openrouter" or "gemini"))
-    {
-        return Results.ValidationProblem(new Dictionary<string, string[]>
-        {
-            ["provider"] = ["Selecione OpenRouter ou Gemini para a análise por IA."]
         });
     }
 
@@ -93,8 +85,7 @@ app.Run();
 public sealed record ReviewRequest(
     [property: JsonPropertyName("code")] string Code,
     [property: JsonPropertyName("language")] string Language,
-    [property: JsonPropertyName("useAi")] bool UseAi = false,
-    [property: JsonPropertyName("provider")] string Provider = "openrouter");
+    [property: JsonPropertyName("useAi")] bool UseAi = false);
 
 public sealed record ReviewFinding(
     string Title,
@@ -108,7 +99,8 @@ public sealed record ReviewFinding(
 public sealed record ReviewResponse(
     string Summary,
     IReadOnlyList<ReviewFinding> Findings,
-    string Provider);
+    string Provider,
+    [property: JsonPropertyName("correctedCode")] string CorrectedCode);
 
 public sealed record PythonErrorResponse(System.Text.Json.JsonElement? Detail);
 

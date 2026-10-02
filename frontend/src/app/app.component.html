@@ -53,18 +53,9 @@
       </div>
       <label class="ai-toggle">
         <input type="checkbox" [(ngModel)]="useAi">
-        <span>Usar análise por IA</span>
+        <span>Revisão profunda com OpenRouter</span>
         <span class="optional-tag">opcional</span>
       </label>
-      @if (useAi) {
-        <label class="provider-select">
-          <span>Provedor de IA</span>
-          <select [(ngModel)]="provider" aria-label="Provedor de IA">
-            <option value="openrouter">OpenRouter</option>
-            <option value="gemini">Google Gemini</option>
-          </select>
-        </label>
-      }
       <button class="review-button" type="button" (click)="analyze()" [disabled]="loading || code.length > 20000">
         @if (loading) {
           <span class="spinner" aria-hidden="true"></span> Analisando...
@@ -72,7 +63,13 @@
           <span aria-hidden="true">✦</span> Analisar código
         }
       </button>
-      <p class="privacy-note">A análise local é executada na sua máquina.</p>
+      <p class="privacy-note">
+        @if (useAi) {
+          O código será enviado à OpenRouter para análise.
+        } @else {
+          A análise local é executada na sua máquina.
+        }
+      </p>
     </aside>
   </section>
 
@@ -106,6 +103,13 @@
             </article>
           }
         </div>
+      }
+      @if (result.correctedCode) {
+        <section class="corrected-code">
+          <h3>Código revisado</h3>
+          <p>Versão proposta pela IA. Revise e teste antes de aplicar.</p>
+          <pre><code>{{ result.correctedCode }}</code></pre>
+        </section>
       }
     </section>
   } @else if (!error) {

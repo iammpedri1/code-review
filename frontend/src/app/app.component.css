@@ -30,8 +30,6 @@ textarea::placeholder { color: #686f7d; }
 .ai-toggle { display: flex; align-items: center; gap: 7px; margin: 17px 0; color: #bdc2cc; font-size: 11px; cursor: pointer; }
 .ai-toggle input { accent-color: #a8e28f; }
 .optional-tag { margin-left: auto; color: #9299a7; font-size: 9px; }
-.provider-select { display: grid; gap: 7px; margin: -4px 0 15px 24px; color: #9299a7; font-size: 10px; }
-.provider-select select { width: 100%; padding: 8px; border: 1px solid #343945; border-radius: 6px; color: #d4d7df; background: #1c2029; font: inherit; }
 .review-button { min-height: 40px; display: flex; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 7px; background: #b3ec98; color: #1b2619; font: inherit; font-size: 12px; font-weight: 750; cursor: pointer; transition: background .15s, transform .15s; }
 .review-button:hover:not(:disabled) { background: #c5f3ad; transform: translateY(-1px); }
 .review-button:disabled { opacity: .65; cursor: wait; }
@@ -64,6 +62,10 @@ textarea::placeholder { color: #686f7d; }
 .empty-result span { color: #a8e28f; margin-right: 8px; }
 .alert { margin-top: 16px; padding: 12px 14px; border-radius: 8px; font-size: 12px; line-height: 1.5; }
 .error-alert { color: #ffc5c5; border: 1px solid #673838; background: #2b1e22; }
+.corrected-code { margin-top: 18px; padding: 16px; border: 1px solid #3a4b37; border-radius: 9px; background: #151820; }
+.corrected-code h3 { margin: 0; font-size: 14px; }
+.corrected-code p { color: #9299a7; font-size: 11px; }
+.corrected-code pre { overflow: auto; max-height: 560px; padding: 14px; border-radius: 6px; color: #d7dce6; background: #10131a; font: 11px/1.6 "SFMono-Regular", Consolas, monospace; white-space: pre; }
 .empty-state { margin: 28px 0 0; padding: 22px; text-align: center; border: 1px dashed #323743; border-radius: 10px; }
 .empty-state-icon { display: inline-grid; place-items: center; width: 34px; height: 34px; color: #a8e28f; background: #263126; border-radius: 9px; font-size: 18px; }
 .empty-state h2 { margin: 10px 0 5px; font-size: 12px; font-weight: 600; }

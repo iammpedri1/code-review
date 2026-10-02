@@ -11,12 +11,12 @@ export interface ReviewFinding {
 export interface ReviewResponse {
   summary: string;
   findings: ReviewFinding[];
-  provider: 'local' | 'openrouter' | 'gemini';
+  provider: 'local' | 'openrouter';
+  correctedCode: string;
 }
 
 export interface ReviewRequest {
   code: string;
   language: string;
   useAi: boolean;
-  provider: 'openrouter' | 'gemini';
 }

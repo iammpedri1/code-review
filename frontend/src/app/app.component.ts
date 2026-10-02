@@ -22,7 +22,6 @@ export class AppComponent {
 }`;
   language = 'javascript';
   useAi = false;
-  provider: 'openrouter' | 'gemini' = 'openrouter';
   loading = false;
   error = '';
   result: ReviewResponse | null = null;
@@ -47,8 +46,7 @@ export class AppComponent {
     this.reviewService.review({
       code: this.code,
       language: this.language,
-      useAi: this.useAi,
-      provider: this.provider
+      useAi: this.useAi
     })
       .pipe(finalize(() => this.loading = false))
       .subscribe({
@@ -75,8 +73,7 @@ export class AppComponent {
   providerLabel(provider: ReviewResponse['provider']): string {
     return {
       local: 'Análise local',
-      openrouter: 'OpenRouter',
-      gemini: 'Gemini'
+      openrouter: 'OpenRouter'
     }[provider];
   }
 }
